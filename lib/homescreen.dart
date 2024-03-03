@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,27 +33,47 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(20),
         children: List.generate(
           discovery.length,
-          (index) => SizedBox(
-            height: 200,
-            child: Material(
-              elevation: 2,
-              borderRadius: BorderRadius.circular(12),
-              color: Colors.white,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.network(
-                    discovery[index]["image"],
-                    fit: BoxFit.cover,
-                    height: 50,
-                    width: 50,
-                  ),
-                  Text(discovery[index]["title"]),
-                  Text(discovery[index]["subtitle"]),
-                ],
-              ),
+          (index) => Material(
+            elevation: 2,
+            borderRadius: BorderRadius.circular(12),
+            color: Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.network(
+                  discovery[index]["image"],
+                  fit: BoxFit.cover,
+                  height: 100,
+                  width: 100,
+                ),
+                Text(discovery[index]["title"]),
+                Text(discovery[index]["subtitle"]),
+              ],
             ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+          child: GNav(
+            backgroundColor: Colors.white,
+            activeColor: Colors.black,
+            tabBackgroundColor: Color(0xFFF4C526),
+            padding: EdgeInsets.all(16),
+            gap: 5,
+            iconSize: 30,
+            tabs: const [
+              GButton(
+                icon: Icons.home,
+                text: "home",
+              ),
+              GButton(icon: Icons.location_on_outlined, text: "location"),
+              GButton(icon: Icons.favorite_border, text: "favorite"),
+              GButton(icon: Icons.person, text: "profile"),
+            ],
           ),
         ),
       ),
@@ -88,12 +109,12 @@ List<Map<String, dynamic>> discovery = [
     "title": "Fast Foods",
     "subtitle": "29 Place",
     "image":
-        "https://png.pngtree.com/png-vector/20200810/ourlarge/pngtree-burger-with-soda-and-sauce-icon-illustration-fast-food-icon-concept-png-image_2322563.jpg"
+        "https://cdn0.iconfinder.com/data/icons/fast-food-106/567/food_icon_burger-512.png"
   },
   {
     "title": "Featured Foods",
     "subtitle": "21 Place",
     "image":
-        "https://png.pngtree.com/element_our/png/20180930/food-icon-design-vector-png_120564.jpg"
+        "https://static.vecteezy.com/system/resources/previews/023/963/108/original/indian-food-icon-free-png.png"
   }
 ];
