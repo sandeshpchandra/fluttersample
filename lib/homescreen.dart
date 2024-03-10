@@ -9,6 +9,45 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  int selectedIndex = 0;
+  // static const TextStyle optionStyle =
+  //     TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
+  static List<Widget> screens = [
+    DiscoveryScreen(),
+    Container(
+      color: Colors.white,
+      child: Center(
+        child: Text(
+          "location",
+          // style: optionStyle,
+        ),
+      ),
+    ),
+    Container(
+      color: Colors.red,
+      child: Center(
+        child: Text(
+          "favorite",
+          // style: optionStyle,
+        ),
+      ),
+    ),
+    Container(
+      color: Colors.teal,
+      child: Center(
+        child: Text(
+          "profile",
+          // style: optionStyle,
+        ),
+      ),
+    ),
+  ];
+  static List<String> appbartext = [
+    "Discovery",
+    "Location",
+    "Favorite",
+    "Profile"
+  ];
   @override
   Widget build(BuildContext context) {
     const primaryColor = Colors.white;
@@ -16,44 +55,17 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Color(0xFFE8E8E9),
       appBar: AppBar(
           toolbarHeight: 120,
-          elevation: 0,
+          elevation: 2,
           backgroundColor: primaryColor,
           title: Center(
             child: Text(
-              'Discovery',
+              appbartext[selectedIndex],
               style:
                   TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
           )),
-      body: GridView.count(
-        crossAxisCount: 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-        padding: const EdgeInsets.all(20),
-        children: List.generate(
-          discovery.length,
-          (index) => Material(
-            elevation: 2,
-            borderRadius: BorderRadius.circular(12),
-            color: Colors.white,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.network(
-                  discovery[index]["image"],
-                  fit: BoxFit.cover,
-                  height: 100,
-                  width: 100,
-                ),
-                Text(discovery[index]["title"]),
-                Text(discovery[index]["subtitle"]),
-              ],
-            ),
-          ),
-        ),
-      ),
+      body: screens[selectedIndex],
       bottomNavigationBar: Container(
         color: Colors.white,
         child: Padding(
@@ -73,6 +85,50 @@ class _HomeScreenState extends State<HomeScreen> {
               GButton(icon: Icons.location_on_outlined, text: "location"),
               GButton(icon: Icons.favorite_border, text: "favorite"),
               GButton(icon: Icons.person, text: "profile"),
+            ],
+            selectedIndex: selectedIndex,
+            onTabChange: (index) {
+              setState(() {
+                selectedIndex = index;
+              });
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DiscoveryScreen extends StatelessWidget {
+  const DiscoveryScreen({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 2,
+      crossAxisSpacing: 10,
+      mainAxisSpacing: 10,
+      padding: const EdgeInsets.all(20),
+      children: List.generate(
+        discovery.length,
+        (index) => Material(
+          elevation: 2,
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.network(
+                discovery[index]["image"],
+                fit: BoxFit.cover,
+                height: 100,
+                width: 100,
+              ),
+              Text(discovery[index]["title"]),
+              Text(discovery[index]["subtitle"]),
             ],
           ),
         ),
